@@ -30,9 +30,23 @@ heights = [185, 40, 190, 200, 130, 381, 150, 358, 21, 80, 77, 282, 180, 100, 252
 
 
 ''' Drawing the rectangles to visualize '''
-def drawrect(heights):
+# def drawrect(heights):
+#     for i in range(len(heights)):
+#         pygame.draw.rect(window, white, (x + 30*i, y, 20, heights[i]- h + 150 ))
+''' Updating the rectangles while sorting '''        
+def update(swap1 = None, swap2 = None, window = window):
+    window.fill(black)
+
     for i in range(len(heights)):
-        pygame.draw.rect(window, white, (x + 30*i, y, 20, heights[i]- h + 150 ))
+        color = white
+        if swap1 == i:
+            color = red
+        elif swap2 == i:
+            color = red
+
+        pygame.draw.rect(window, color, (x + 30*i, y, 20, heights[i]- h + 150 ))
+    
+    pygame.display.update()
 
 
 ''' game fps '''
@@ -65,7 +79,7 @@ while run:
         window.fill(black)
 
         ''' drawing the rectangles '''
-        drawrect(heights)
+        update()
 
         ''' updating the game window at every iteration of the loop '''
         pygame.display.update()
@@ -76,19 +90,27 @@ while run:
         ''' Bubble Sort algo '''
         for i in range(len(heights)):
             for j in range(len(heights)-i-1):
+                ''' updating the display at every iteration to make the active rectangles of different colours '''
+                update(j, j+1)
                 if heights[j] < heights[j+1]:
+
                     heights[j], heights[j+1] = heights[j+1], heights[j]
                 
-                ''' filling the screen black before updating the position of bars'''
-                window.fill(black)
+                ''' creating a delay so that we can see the list during the sorting process '''
+                pygame.time.delay(50)
 
-                drawrect(heights)
+            
+                ''' old code might need it later '''
+                # ''' filling the screen black before updating the position of bars'''
+                # window.fill(black)
 
-                ''' adding delay to properly visualize '''
-                pygame.time.delay(100)
+                # drawrect(heights)
 
-                ''' update the game window after every swap '''
-                pygame.display.update()
+                # ''' adding delay to properly visualize '''
+                # pygame.time.delay(100)
+
+                # ''' update the game window after every swap '''
+                # pygame.display.update()
 
         sort = False
 
