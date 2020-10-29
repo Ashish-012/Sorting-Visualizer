@@ -8,7 +8,7 @@ pygame.init()
 white = (255, 255, 255)
 red = (255, 0, 0)
 black = (0, 0, 0)
-
+purple = (128,0,128)
 
 ''' Dimension of the game window '''
 w = 800
@@ -34,7 +34,7 @@ heights = [185, 40, 190, 200, 130, 381, 150, 358, 21, 80, 77, 282, 180, 100, 252
 #     for i in range(len(heights)):
 #         pygame.draw.rect(window, white, (x + 30*i, y, 20, heights[i]- h + 150 ))
 ''' Updating the rectangles while sorting '''        
-def update(swap1 = None, swap2 = None, window = window):
+def update(swap1 = None, swap2 = None, window = window, s = None):
     window.fill(black)
 
     for i in range(len(heights)):
@@ -43,9 +43,14 @@ def update(swap1 = None, swap2 = None, window = window):
             color = red
         elif swap2 == i:
             color = red
+        elif s != None and i in s:
+            color = purple
 
         pygame.draw.rect(window, color, (x + 30*i, y, 20, heights[i]- h + 150 ))
-    
+        
+        # if sorted != None:
+            
+
     pygame.display.update()
 
 
@@ -55,6 +60,8 @@ clock = pygame.time.Clock()
 
 run = True
 sort = False
+''' List containing sorted elements '''
+l = [] 
 
 ''' Main game loop (will run till the run is True) '''
 while run:
@@ -79,7 +86,7 @@ while run:
         window.fill(black)
 
         ''' drawing the rectangles '''
-        update()
+        update(l)
 
         ''' updating the game window at every iteration of the loop '''
         pygame.display.update()
@@ -89,18 +96,22 @@ while run:
 
         ''' Bubble Sort algo '''
         for i in range(len(heights)):
-            for j in range(len(heights)-i-1):
-                ''' updating the display at every iteration to make the active rectangles of different colours '''
-                update(j, j+1)
-                if heights[j] < heights[j+1]:
 
+            for j in range(len(heights)-i-1):
+            
+                ''' updating the display at every iteration to make the active rectangles of different colours '''
+                update(swap1 = j, swap2 = j+1, s = l)
+
+                if heights[j] < heights[j+1]:
                     heights[j], heights[j+1] = heights[j+1], heights[j]
-                
+
                 ''' creating a delay so that we can see the list during the sorting process '''
                 pygame.time.delay(50)
-
             
-                ''' old code might need it later '''
+            l.append(len(heights)-i)
+            update(s = l)
+
+            ''' old code might need it later '''
                 # ''' filling the screen black before updating the position of bars'''
                 # window.fill(black)
 
@@ -111,7 +122,7 @@ while run:
 
                 # ''' update the game window after every swap '''
                 # pygame.display.update()
-
+        l.clear()
         sort = False
 
     clock.tick(FPS)
