@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 pygame.init()
@@ -33,25 +34,32 @@ heights = [185, 40, 190, 200, 130, 381, 150, 358, 21, 80, 77, 282, 180, 100, 252
 # def drawrect(heights):
 #     for i in range(len(heights)):
 #         pygame.draw.rect(window, white, (x + 30*i, y, 20, heights[i]- h + 150 ))
-''' Updating the rectangles while sorting '''        
-def update(swap1 = None, swap2 = None, window = window, s = None):
+
+''' Drawing and Updating the rectangles while sorting '''        
+def update(swap1 = None, swap2 = None, window = window, s = None, first = False):
     window.fill(black)
 
     for i in range(len(heights)):
-        color = white
-        if swap1 == i:
-            color = red
-        elif swap2 == i:
-            color = red
-        elif s != None and i in s:
+        ''' white means array is sorting, purple after sorting, red means those elements are active '''
+        if first == False:
+            color = white
+        else: 
             color = purple
 
-        pygame.draw.rect(window, color, (x + 30*i, y, 20, heights[i]- h + 150 ))
+        if swap1 == i or swap2 == i:
+            color = red
         
-        # if sorted != None:
-            
+        elif s != None and i in s:
+            color = purple
+        ''' drawing the rectangles '''
+        pygame.draw.rect(window, color, (x + 30*i, y, 20, heights[i]- h + 150 ))
 
+    '''updating the window after every iteration '''
     pygame.display.update()
+
+''' Randomise the array '''
+def generate_height(heights):
+    random.shuffle(heights)
 
 
 ''' game fps '''
@@ -78,6 +86,9 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE :
                 sort = True
+            ''' randomise the array if `r` is pressed '''
+            if event.key == pygame.K_r:
+                generate_height(heights)
 
 
     ''' Only display the bars till the spacebar is pressed to sort '''
@@ -86,7 +97,7 @@ while run:
         window.fill(black)
 
         ''' drawing the rectangles '''
-        update(l)
+        update(first = True)
 
         ''' updating the game window at every iteration of the loop '''
         pygame.display.update()
