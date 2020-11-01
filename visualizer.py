@@ -18,7 +18,7 @@ h = 600
 
 ''' Initial x and y coordinates of the rectangles '''
 x = 80
-y = 550
+y = 590
 
 
 ''' Drawing the game window and setting the caption '''
@@ -61,6 +61,11 @@ def update(swap1 = None, swap2 = None, window = window, s = None, first = False)
 def generate_height(heights):
     random.shuffle(heights)
 
+def display_font():
+    font = pygame.font.SysFont('chalkduster.ttf',30)
+    text = font.render('Bubble Sort! Press space to sort. Press r to randomize', True, white)
+    font_rect = text.get_rect(center = (w//2,20))
+    window.blit(text, font_rect)
 
 ''' game fps '''
 FPS = 120
@@ -99,9 +104,13 @@ while run:
         ''' drawing the rectangles '''
         update(first = True)
 
+        ''' displayig the font '''
+        display_font()
+
         ''' updating the game window at every iteration of the loop '''
         pygame.display.update()
-    
+
+        
     
     elif sort == True :
 
