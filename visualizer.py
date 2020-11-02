@@ -54,6 +54,9 @@ def update(swap1 = None, swap2 = None, window = window, s = None, first = False)
         ''' drawing the rectangles '''
         pygame.draw.rect(window, color, (x + 30*i, y, 20, heights[i]- h + 150 ))
 
+        ''' displayig the font '''
+        display_font()
+
     '''updating the window after every iteration '''
     pygame.display.update()
 
@@ -98,20 +101,13 @@ while run:
 
     ''' Only display the bars till the spacebar is pressed to sort '''
     if sort == False:
-        ''' filling the background with black colour'''
-        window.fill(black)
 
         ''' drawing the rectangles '''
         update(first = True)
 
-        ''' displayig the font '''
-        display_font()
-
         ''' updating the game window at every iteration of the loop '''
         pygame.display.update()
 
-        
-    
     elif sort == True :
 
         ''' Bubble Sort algo '''
