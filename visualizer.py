@@ -17,7 +17,7 @@ h = 600
 
 
 ''' Initial x and y coordinates of the rectangles '''
-x = 80
+x = 30
 y = 590
 
 
@@ -27,7 +27,8 @@ pygame.display.set_caption('Sorting Visualizer')
 
 
 ''' Heights of the bars we have to sort (should add a random function to generate this height) '''
-heights = [185, 40, 190, 200, 130, 381, 150, 358, 21, 80, 77, 282, 180, 100, 252, 164, 196, 130, 145, 200, 300, 155]
+heights = [i for i in range(50,350,12)]
+random.shuffle(heights)
 
 
 ''' Drawing the rectangles to visualize '''
@@ -52,7 +53,7 @@ def update(swap1 = None, swap2 = None, window = window, s = None, first = False)
         elif s != None and i in s:
             color = purple
         ''' drawing the rectangles '''
-        pygame.draw.rect(window, color, (x + 30*i, y, 20, heights[i]- h + 150 ))
+        pygame.draw.rect(window, color, (x + 30*i, y, 15, heights[i]- h + 150 ))
 
         ''' displayig the font '''
         display_font()
@@ -122,7 +123,7 @@ while run:
                     heights[j], heights[j+1] = heights[j+1], heights[j]
 
                 ''' creating a delay so that we can see the list during the sorting process '''
-                pygame.time.delay(50)
+                pygame.time.delay(10)
             
             l.append(len(heights)-i)
             update(s = l)
